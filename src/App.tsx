@@ -1,8 +1,11 @@
+import { CreatePollForm } from './components/CreatePollForm'
 import './global.css'
 
 function App() {
   return (
-    <h1>Hi</h1>
+    <main className="flex justify-center items-center bg-zinc-950 min-h-screen">
+      <CreatePollForm />
+    </main>
   )
 }
 
