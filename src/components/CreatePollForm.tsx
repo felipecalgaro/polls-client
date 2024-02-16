@@ -2,8 +2,24 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Input } from '../Input';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+
+type CreatePollRequest = {
+  title: string
+  options: string[]
+}
 
 export function CreatePollForm() {
+  const mutation = useMutation({
+    mutationFn: ({ title, options }: CreatePollRequest) => {
+      return axios.post('http://localhost:3333/polls', {
+        title,
+        options
+      })
+    }
+  })
+
   const createPollFormSchema = z.object({
     title: z.string().min(1, 'You must provide a title for the poll.'),
     options: z.array(z.object({ title: z.string() }))
@@ -25,7 +41,9 @@ export function CreatePollForm() {
   }
 
   function createPoll(data: CreatePollFormData) {
-    console.log(data);
+    const { options, title } = data
+
+    mutation.mutate({ title, options: options.map(option => option.title) })
   }
 
   return (
@@ -46,7 +64,7 @@ export function CreatePollForm() {
         {fields.length < 5 && (
           <button type='button' onClick={addPollOption} className='self-start text-cyan-700'>Add option</button>
         )}
-        <button disabled={createPollForm.formState.isSubmitting} type='submit' className='w-4/5 bg-cyan-600 hover:bg-cyan-700 transition-colors duration-150 py-1 rounded-sm self-center mt-2'>Create</button>
+        <button disabled={createPollForm.formState.isSubmitting} type='submit' className='w-4/5 bg-cyan-600 hover:bg-cyan-800 transition-colors duration-150 py-1 rounded-sm self-center mt-2'>Create</button>
       </form>
     </FormProvider>
   )
