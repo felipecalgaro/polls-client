@@ -1,26 +1,26 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { CreatePollForm } from './components/CreatePollForm'
-import { PollsSection } from './components/PollsSection'
-import { useState } from 'react'
-
 import './global.css'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Polls from './pages/Polls'
+import Poll from './pages/Poll'
 
 const queryClient = new QueryClient()
 
-export type Poll = {
-  id: string
-  title: string
-}
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Polls />
+  },
+  {
+    path: 'polls/:pollId',
+    element: <Poll />,
+  }
+])
 
 function App() {
-  const [polls, setPolls] = useState<Poll[]>([])
-
   return (
     <QueryClientProvider client={queryClient}>
-      <main className="flex justify-center items-center bg-zinc-950 min-h-screen">
-        <CreatePollForm setPolls={setPolls} />
-        <PollsSection polls={polls} />
-      </main>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   )
 }
