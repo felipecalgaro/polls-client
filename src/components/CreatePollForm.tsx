@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Input } from '../Input';
+import { Input } from './Input';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { Poll } from '../App';
+import { Poll } from '../pages/Polls';
 import { SetStateAction } from 'react';
 
 type CreatePollRequest = {
@@ -107,7 +107,7 @@ export function CreatePollForm({ setPolls }: CreatePollFormProps) {
         {fields.length < 5 && (
           <button type='button' onClick={addPollOption} className='self-start text-cyan-700'>Add option</button>
         )}
-        <button disabled={createPollForm.formState.isSubmitting} type='submit' className='w-4/5 bg-cyan-600 hover:bg-cyan-800 transition-colors duration-150 py-1 rounded-sm self-center mt-2'>Create</button>
+        <button disabled={createPollForm.formState.isSubmitting} type='submit' className='w-4/5 bg-cyan-600 hover:bg-cyan-700 transition-colors duration-150 py-1 rounded-sm self-center mt-2'>Create</button>
       </form>
     </FormProvider >
   )
