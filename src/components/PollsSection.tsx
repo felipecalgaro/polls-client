@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Poll } from '../App'
+import { Poll } from '../pages/Polls'
 
 interface PollsSectionProps {
   polls: Poll[]
