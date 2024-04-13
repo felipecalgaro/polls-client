@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { z } from 'zod';
@@ -17,6 +17,10 @@ type GetPollResponse = {
   }
 }
 
+type VoteOnPollRequest = {
+  pollOptionId: string
+}
+
 export default function Poll() {
   const pollParams = z.object({
     pollId: z.string().uuid()
@@ -33,17 +37,36 @@ export default function Poll() {
     },
   })
 
+  const { mutate } = useMutation<undefined, Error, VoteOnPollRequest>({
+    mutationFn: ({ pollOptionId }) => {
+      return axios.post(`http://localhost:3333/polls/${pollId}/votes`, {
+        pollOptionId
+      })
+    }
+  })
+
+  function handleVote(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, optionId: string) {
+    event.preventDefault()
+
+    mutate({ pollOptionId: optionId })
+  }
+
   return (
     <main className="flex justify-center items-center bg-zinc-950 min-h-screen">
 
       {response?.data && (
         <>
           <p className='text-white text-xl'>{response.data.poll.title}</p>
-          <p className='text-orange-400 text-xl'>{response.data.poll.options.map(option => <p>{option.title}</p>)}</p>
+          <div>
+            {response.data.poll.options.map(option => (
+              <div>
+                <p className='text-orange-400 text-xl'>{option.title}</p>
+                <button className='bg-white' onClick={(e) => handleVote(e, option.id)}>Vote</button>
+              </div>
+            ))}
+          </div>
         </>
       )}
     </main>
   )
-
-  // votar em cada uma e botar pontuacao (ws)
 }
