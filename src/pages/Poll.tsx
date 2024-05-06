@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { z } from 'zod';
 
@@ -39,13 +39,16 @@ export default function Poll() {
 
   const { pollId } = pollParams.parse(params)
 
-  const ws = new WebSocket(`ws://localhost:3333/polls/${pollId}/results`)
-  ws.onmessage = (event: MessageEvent) => {
-    const message = JSON.parse(event.data) as Message
-    setOptionsScore(prev => {
-      return { ...prev, [message.pollOptionId]: message.votes }
-    })
-  }
+  useEffect(() => {
+    const ws = new WebSocket(`ws://localhost:3333/polls/${pollId}/results`)
+    ws.onmessage = (event: MessageEvent) => {
+      const message = JSON.parse(event.data) as Message
+      setOptionsScore(prev => {
+        return { ...prev, [message.pollOptionId]: message.votes }
+      })
+    }
+  }, [pollId])
+
 
   const { data: response, isLoading, } = useQuery<undefined, Error, GetPollResponse>({
     queryKey: ['polls'],
@@ -63,8 +66,6 @@ export default function Poll() {
       })
     },
   })
-
-  console.log(document.cookie);
 
   function handleVote(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, optionId: string) {
     event.preventDefault()
