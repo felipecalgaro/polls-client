@@ -54,7 +54,6 @@ export default function Poll() {
       setOptionsScore(prev => {
         return { ...prev, [message.pollOptionId]: message.votes }
       })
-      setChosenOptionId(message.pollOptionId)
     }
   }, [pollId])
 
@@ -84,6 +83,9 @@ export default function Poll() {
         withCredentials: true,
       })
     },
+    onSuccess: (_, { pollOptionId }) => {
+      setChosenOptionId(pollOptionId)
+    }
   })
 
   async function handleVote(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, optionId: string) {

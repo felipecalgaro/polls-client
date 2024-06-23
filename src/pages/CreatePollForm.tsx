@@ -5,7 +5,6 @@ import { Input } from '../components/Input';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 type CreatePollRequest = {
   title: string
@@ -27,6 +26,9 @@ export default function CreatePollForm() {
         title,
         options
       })
+    },
+    onSuccess: ({ data }) => {
+      navigate(`/polls/${data.pollId}`)
     }
   })
 
@@ -53,16 +55,13 @@ export default function CreatePollForm() {
   function createPoll(data: CreatePollFormData) {
     const { options, title } = data
 
-    mutation.mutate({ title, options: options.map(option => option.title) })
+    mutation.mutate({
+      title,
+      options: options.map(option => option.title)
+    })
   }
 
   const { errors } = createPollForm.formState
-
-  useEffect(() => {
-    if (mutation.isSuccess) {
-      navigate(`/polls/${mutation.data.data.pollId}`)
-    }
-  }, [mutation.isSuccess, mutation.data, navigate])
 
   return (
     <main className="flex justify-center items-center bg-zinc-950 min-h-screen">
