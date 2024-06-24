@@ -103,7 +103,7 @@ export default function Poll() {
       <div className='bg-zinc-900 flex justify-center items-center flex-col w-1/3'>
         {!isLoading && (
           <>
-            <p className='text-white text-xl my-6'>{poll?.data.poll.title}</p>
+            <p className='text-white text-xl m-8'>{poll?.data.poll.title}</p>
             <div className='flex justify-center items-center flex-col p-8 w-full gap-y-1'>
               {poll?.data.poll.options.map(option => (
                 <button
