@@ -5,6 +5,7 @@ import { Input } from '../components/Input';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../utils/baseUrl';
 
 type CreatePollRequest = {
   title: string
@@ -22,7 +23,7 @@ export default function CreatePollForm() {
 
   const mutation = useMutation<CreatePollResponse, Error, CreatePollRequest>({
     mutationFn: ({ title, options }) => {
-      return axios.post('http://localhost:3333/polls', {
+      return axios.post(baseUrl, {
         title,
         options
       })

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
+import { baseUrl } from '../utils/baseUrl';
 
 type Option = {
   id: string,
@@ -61,14 +62,14 @@ export default function Poll() {
   const { data: poll, isLoading, } = useQuery<undefined, Error, GetPollResponse>({
     queryKey: ['poll'],
     queryFn: () => {
-      return axios.get(`http://localhost:3333/polls/${pollId}`)
+      return axios.get(`${baseUrl}/${pollId}`)
     },
   })
 
   const { data: vote } = useQuery<undefined, Error, GetVoteResponse>({
     queryKey: ['vote'],
     queryFn: () => {
-      return axios.get(`http://localhost:3333/polls/${pollId}/vote`, {
+      return axios.get(`${baseUrl}/${pollId}/vote`, {
         withCredentials: true
       })
     },
@@ -77,7 +78,7 @@ export default function Poll() {
 
   const { mutate } = useMutation<undefined, Error, VoteOnPollRequest>({
     mutationFn: ({ pollOptionId }) => {
-      return axios.post(`http://localhost:3333/polls/${pollId}/votes`, {
+      return axios.post(`${baseUrl}/${pollId}/votes`, {
         pollOptionId
       }, {
         withCredentials: true,
