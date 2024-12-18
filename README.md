@@ -1,13 +1,10 @@
 # 🖊️ Polls Client
 
-This is the client portion of the Polls project, which is a platform where you can create a poll with multiple options, vote on one of them and see others' votes in real-time.
+This is the client portion of the Polls project, which is a platform where you can create a poll with multiple options, vote on one of them and see others voting in real-time.
 
 ## Table of Contents
 
 - [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
 - [Features](#features)
 - [Usage](#usage)
 - [Folder Structure](#folder-structure)
@@ -24,27 +21,6 @@ This is the client portion of the Polls project, which is a platform where you c
 - [React Router Dom](https://reactrouter.com/) - Efficient pages navigation library for React.
 - [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) - Real-time connection between API and client.
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js and npm (or yarn) installed on your local environment.
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/project-name.git
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   cd project-name
-   npm i  ## or yarn add
-   ```
-
 ## Features
 
 - The poll creation is controlled by Zod and React Hook Form
@@ -58,11 +34,7 @@ This is the client portion of the Polls project, which is a platform where you c
 
 ## Usage
 
-1. Run the application:
-
-   ```bash
-   npm run dev
-   ```
+1. Access the application: [https://polls-client-psi.vercel.app/](https://polls-client-psi.vercel.app/)
 
 2. Create a poll with a title and some options:
 
