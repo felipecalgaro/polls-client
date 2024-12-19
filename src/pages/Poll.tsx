@@ -49,7 +49,7 @@ export default function Poll() {
   const { pollId } = pollParams.parse(params)
 
   useEffect(() => {
-    const ws = new WebSocket(`ws://${baseHost}/polls/${pollId}/results`)
+    const ws = new WebSocket(`wss://${baseHost}/polls/${pollId}/results`)
     ws.onmessage = (event: MessageEvent) => {
       const message = JSON.parse(event.data) as Message
       setOptionsScore(prev => {
