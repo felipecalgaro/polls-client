@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
-import { baseUrl } from '../utils/baseUrl';
+import { baseHost } from '../utils/baseHost';
+import { client } from '../lib/axios';
 
 type Option = {
   id: string,
@@ -49,7 +49,7 @@ export default function Poll() {
   const { pollId } = pollParams.parse(params)
 
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:3333/polls/${pollId}/results`)
+    const ws = new WebSocket(`ws://${baseHost}/polls/${pollId}/results`)
     ws.onmessage = (event: MessageEvent) => {
       const message = JSON.parse(event.data) as Message
       setOptionsScore(prev => {
@@ -62,14 +62,14 @@ export default function Poll() {
   const { data: poll, isLoading, } = useQuery<undefined, Error, GetPollResponse>({
     queryKey: ['poll'],
     queryFn: () => {
-      return axios.get(`${baseUrl}/${pollId}`)
+      return client.get(`/polls/${pollId}`)
     },
   })
 
   const { data: vote } = useQuery<undefined, Error, GetVoteResponse>({
     queryKey: ['vote'],
     queryFn: () => {
-      return axios.get(`${baseUrl}/${pollId}/vote`, {
+      return client.get(`/polls/${pollId}/vote`, {
         withCredentials: true
       })
     },
@@ -78,7 +78,7 @@ export default function Poll() {
 
   const { mutate } = useMutation<undefined, Error, VoteOnPollRequest>({
     mutationFn: ({ pollOptionId }) => {
-      return axios.post(`${baseUrl}/${pollId}/votes`, {
+      return client.post(`/polls/${pollId}/votes`, {
         pollOptionId
       }, {
         withCredentials: true,

@@ -3,9 +3,8 @@ import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Input } from '../components/Input';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { baseUrl } from '../utils/baseUrl';
+import { client } from '../lib/axios';
 
 type CreatePollRequest = {
   title: string
@@ -23,7 +22,7 @@ export default function CreatePollForm() {
 
   const mutation = useMutation<CreatePollResponse, Error, CreatePollRequest>({
     mutationFn: ({ title, options }) => {
-      return axios.post(baseUrl, {
+      return client.post('/polls', {
         title,
         options
       })
@@ -90,8 +89,8 @@ export default function CreatePollForm() {
             </div>
           </div>
           {fields.map((field, index) => (
-            <>
-              <div className='flex justify-start items-center gap-x-4 gap-y-1.5 w-full flex-wrap' key={index}>
+            <div key={field.id}>
+              <div className='flex justify-start items-center gap-x-4 gap-y-1.5 w-full flex-wrap'>
                 <label htmlFor={field.id} className='w-full text-slate-200'>{`Option ${index + 1}`}</label>
                 <Input
                   id={field.id}
@@ -104,7 +103,7 @@ export default function CreatePollForm() {
                   {createPollForm.formState.errors.options?.[index]?.title && createPollForm.formState.errors.options?.[index]?.title?.message}
                 </span>
               </div>
-            </>
+            </div>
           ))}
           {fields.length < 5 && (
             <button type='button' onClick={addPollOption} className='self-start text-cyan-700'>Add option</button>
