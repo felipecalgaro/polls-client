@@ -49,7 +49,7 @@ export default function Poll() {
   const { pollId } = pollParams.parse(params)
 
   useEffect(() => {
-    const ws = new WebSocket(`wss://${baseHost}/polls/${pollId}/results`)
+    const ws = new WebSocket(`wss://${baseHost}/polls/${pollId}/result`)
     ws.onmessage = (event: MessageEvent) => {
       const message = JSON.parse(event.data) as Message
       setOptionsScore(prev => {
@@ -100,8 +100,8 @@ export default function Poll() {
   }, [vote])
 
   return (
-    <main className="flex justify-center items-center bg-zinc-950 min-h-screen">
-      <div className='bg-zinc-900 flex justify-center items-center flex-col w-1/3'>
+    <main className="flex justify-center items-center bg-zinc-950 min-h-screen xl:p-0 lg:p-32 sm:p-24 p-6">
+      <div className='bg-zinc-900 flex justify-center items-center flex-col xl:w-1/2 lg:w-2/3 w-full'>
         {!isLoading && (
           <>
             <p className='text-white text-xl m-8'>{poll?.data.poll.title}</p>
