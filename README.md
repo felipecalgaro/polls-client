@@ -1,5 +1,14 @@
 # 🖊️ Polls Client
 
+## What I Learned
+
+- Advanced form validation including dynamically addable fields with Zod and React Hook Form
+- Real-time API connection using WebSocket
+- User identification via cookies
+  - This made possible for each vote to be remembered across user sessions
+
+## Overview
+
 This is the client portion of the Polls project, which is a platform where you can create a poll with multiple options, vote on one of them and see others voting in real-time.
 
 ## Table of Contents
@@ -7,7 +16,6 @@ This is the client portion of the Polls project, which is a platform where you c
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [Usage](#usage)
-- [Folder Structure](#folder-structure)
 - [License](#license)
 
 ## Technologies Used
@@ -34,39 +42,17 @@ This is the client portion of the Polls project, which is a platform where you c
 
 ## Usage
 
-1. Access the application: [https://polls-client-psi.vercel.app/](https://polls-client-psi.vercel.app/)
-
-2. Create a poll with a title and some options:
+1. Create a poll with a title and some options:
 
 ![1](https://github.com/felipecalgaro/polls-client/assets/102491212/896df9eb-12be-4b62-b20c-d42fa6b67b65)
 
-3. Vote on any option anytime you want, and only one option at a time:
+2. Vote on any option anytime you want, and only one option at a time:
 
 ![2](https://github.com/felipecalgaro/polls-client/assets/102491212/8d823002-ebca-4c08-bf18-913f7e8e2a01)
 
-4. Invite some friends in order to see real-time voting:
+3. Invite some friends in order to see real-time voting:
 
 ![3](https://github.com/felipecalgaro/polls-client/assets/102491212/1663d91c-4c24-45de-a383-1dfa6589ffb6)
-
-## Folder Structure
-
-```bash
-polls-client/
-│
-├── src/
-│   ├── components/
-│   │   ├── Input.tsx
-│   ├── pages/
-│   │   ├── CreatePollForm.tsx
-│   │   └── Poll.tsx
-│   ├── App.tsx
-│   ├── index.tsx
-│   └── global.css
-│
-├── .gitignore
-├── package.json
-└── README.md
-```
 
 ## License
 
